@@ -1,0 +1,18 @@
+# --- Secrets (NEVER UPLOAD) ---
+.env
+.env.local
+.DS_Store
+
+# --- Dependencies (Too heavy) ---
+node_modules/
+/ai-resume-analyzer/node_modules/
+/server/node_modules/
+
+# --- IDE Settings ---
+.idea/
+.vscode/
+
+# --- Build Outputs ---
+dist/
+build/
+coverage/
