@@ -168,15 +168,6 @@ resume-analyzer/
 
 ---
 
-## 📸 Screenshots
-
-*(You can add screenshots of your project here by placing images in a folder and linking them)*
-
-| Login Page | Dashboard | Analysis Result |
-| --- | --- | --- |
-|  |  |  |
-
----
 
 ## 🤝 Contributing
 
