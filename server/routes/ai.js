@@ -55,7 +55,11 @@ router.post('/chat', async (req, res) => {
             "companyName": "Candidate's Current/Past Company",
             "jobTitle": "Candidate's Role",
             "overallScore": 0-100,
-            "summary": "Short executive summary",
+            
+            // NEW FIELDS ADDED HERE
+            "summary": "A professional 3-4 sentence executive summary of the candidate's profile, highlighting their experience level and main focus.",
+            "headPoints": ["Key strength or achievement 1", "Key strength or achievement 2", "Key strength or achievement 3"],
+            
             "ATS": { "score": 0-100, "tips": [{"type": "good"|"improve", "tip": "string"}] },
             "content": { "score": 0-100, "tips": [] },
             "structure": { "score": 0-100, "tips": [] },

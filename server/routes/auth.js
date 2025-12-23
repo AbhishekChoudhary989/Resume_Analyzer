@@ -13,7 +13,7 @@ router.post('/login', async (req, res) => {
             return res.status(401).json({ message: "Identity handle not recognized" });
         }
 
-        // 2. Securely Compare Passwords
+        // 2. Securely Compare Passwords this is upadeted one
         // If you are using plain text (admin123), use: if (password !== user.password)
         // If you are using hashed passwords (recommended):
         const isMatch = await bcrypt.compare(password, user.password);
