@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { useNavigate, useLocation } from "react-router";
-import { LogIn, UserPlus, Mail, Lock, Sparkles } from "lucide-react";
+import { LogIn, UserPlus, Mail, Lock, Sparkles, Eye, EyeOff } from "lucide-react";
 
 // ✅ CONFIG: Points to your local Node.js server
 const API_URL = "http://localhost:5000/api/auth";
@@ -18,6 +18,9 @@ const Auth = () => {
     const [password, setPassword] = useState("");
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState<string | null>(null);
+
+    // ✅ NEW: Toggle Password Visibility
+    const [showPassword, setShowPassword] = useState(false);
 
     const searchParams = new URLSearchParams(location.search);
     const next = searchParams.get('next') || '/';
@@ -84,25 +87,24 @@ const Auth = () => {
                 </div>
 
                 {/* Glassmorphic Login Card */}
-                <div className="bg-slate-900/60 backdrop-blur-xl rounded-[3rem] shadow-2xl border border-slate-800/50 p-8 md:p-10 transition-all duration-500 hover:shadow-indigo-500/10">
+                <div className="bg-slate-900/80 backdrop-blur-xl rounded-[3rem] shadow-2xl border border-slate-800 p-8 md:p-10 transition-all duration-500 hover:shadow-indigo-500/10">
                     <form onSubmit={handleSubmit} className="space-y-6">
 
                         {/* Error Alert */}
                         {error && (
-                            <div className="p-3 bg-red-950/50  text-red-300 text-xs rounded-xl text-center font-bold animate-shake">
+                            <div className="p-3 bg-red-950/50 border border-red-800/50 text-red-300 text-xs rounded-xl text-center font-bold animate-shake">
                                 {error}
                             </div>
                         )}
 
+                        {/* Email Input */}
                         <div className="space-y-2">
-                            <label className="text-[10px] font-black uppercase tracking-widest text-slate-400 ml-1">Identity Handle</label>
-                            <div className="relative">
-                                {/* CHANGED: Icon is centered better for taller input */}
-                                <Mail className="absolute left-5 top-1/2 -translate-y-1/2 h-5 w-5 text-slate-500 pointer-events-none" />
+                            <label className="text-[10px] font-black uppercase tracking-widest text-slate-400 ml-2">Identity Handle</label>
+                            <div className="relative group">
+                                <Mail className="absolute left-4 top-1/2 -translate-y-1/2 h-5 w-5 text-slate-500 group-focus-within:text-indigo-600 transition-colors pointer-events-none z-10" />
 
-                                {/* CHANGED: Increased 'py-5' (taller) and 'pl-14' (icon spacing) */}
                                 <input
-                                    className="w-full pl-100 pr-6 py-5 rounded-2xl border border-slate-800 bg-slate-950/50 text-white focus:bg-slate-950 focus:ring-4 focus:ring-indigo-500/20 focus:border-indigo-500 outline-none transition-all placeholder:text-slate-600 text-sm font-medium shadow-inner"
+                                    className="w-full h-14 pl-12 pr-4 rounded-xl border border-slate-700 bg-white text-slate-900 placeholder:text-slate-400 focus:border-indigo-500 focus:ring-4 focus:ring-indigo-500/20 outline-none transition-all font-bold text-lg shadow-inner"
                                     type="email"
                                     placeholder="name@company.com"
                                     value={email}
@@ -112,26 +114,39 @@ const Auth = () => {
                             </div>
                         </div>
 
+                        {/* Password Input (With Show/Hide) */}
                         <div className="space-y-2">
-                            <label className="text-[14px] font-black uppercase tracking-widest text-slate-400 ml-1">Access Code</label>
-                            <div className="relative">
-                                {/* CHANGED: Icon position */}
-                                <Lock className="absolute left-5 top-1/2 -translate-y-1/2 h-5 w-5 text-slate-500 pointer-events-none" />
+                            <label className="text-[10px] font-black uppercase tracking-widest text-slate-400 ml-2">Access Code</label>
+                            <div className="relative group">
+                                <Lock className="absolute left-4 top-1/2 -translate-y-1/2 h-5 w-5 text-slate-500 group-focus-within:text-indigo-600 transition-colors pointer-events-none z-10" />
 
-                                {/* CHANGED: Increased 'py-5' (taller) and 'pl-14' */}
                                 <input
-                                    className=" bg-slate-950/50 text-white focus:bg-slate-950 focus:ring-4 focus:ring-indigo-500/20 focus:border-indigo-500 outline-none transition-all placeholder:text-slate-600 text-sm font-medium shadow-inner"
-                                    type="password"
+                                    className="w-full h-14 pl-12 pr-12 rounded-xl border border-slate-700 bg-white text-slate-900 placeholder:text-slate-400 focus:border-indigo-500 focus:ring-4 focus:ring-indigo-500/20 outline-none transition-all font-bold text-lg shadow-inner"
+                                    // ✅ DYNAMIC TYPE: text or password
+                                    type={showPassword ? "text" : "password"}
                                     placeholder="••••••••"
                                     value={password}
                                     onChange={(e) => setPassword(e.target.value)}
                                     required
                                 />
+
+                                {/* ✅ SHOW/HIDE BUTTON */}
+                                <button
+                                    type="button"
+                                    onClick={() => setShowPassword(!showPassword)}
+                                    className="absolute right-4 top-1/2 -translate-y-1/2 text-slate-400 hover:text-indigo-600 transition-colors z-20 focus:outline-none"
+                                >
+                                    {showPassword ? (
+                                        <EyeOff className="h-5 w-5" />
+                                    ) : (
+                                        <Eye className="h-5 w-5" />
+                                    )}
+                                </button>
                             </div>
                         </div>
 
                         <button
-                            className="group relative w-full bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-500 hover:to-purple-500 text-white font-bold py-5 rounded-2xl shadow-xl shadow-indigo-500/20 transition-all hover:scale-[1.02] active:scale-[0.98] disabled:opacity-70 overflow-hidden mt-2"
+                            className="group relative w-full bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-500 hover:to-purple-500 text-white font-bold py-4 rounded-2xl shadow-xl shadow-indigo-500/20 transition-all hover:scale-[1.02] active:scale-[0.98] disabled:opacity-70 overflow-hidden mt-4"
                             type="submit"
                             disabled={loading}
                         >

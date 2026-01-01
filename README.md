@@ -19,7 +19,7 @@ Instead of simple keyword matching, our AI "reads" your resume to understand con
 
 ---
 
-## 🛠️ Tech Stack
+## 🛠️ Tech Stacks
 
 * **Frontend:** React.js, Vite, Tailwind CSS, Lucide Icons
 * **Backend:** Node.js, Express.js
